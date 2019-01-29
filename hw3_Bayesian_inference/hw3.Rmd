@@ -1,0 +1,32 @@
+---
+title: "HW-3"
+author: "Anastasia Orlenko"
+date: '29 января 2019 г '
+output: html_document
+---
+
+library(tidyverse)
+
+### 3.1
+```{r}
+dataset = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/AnastasiaOrlenko/hw3_Bayesian_inference/hw3_phoible.csv')
+
+prod(dnorm(dataset$consonants, mean = 22, sd = 6))
+```
+### 3.2
+```{r}
+dataset_2 = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/letter_frequency.csv')
+
+data_frame(languages = colnames(dataset_2[,-14]),
+           prior = 1 / (ncol(dataset_2) - 1),
+           likelihood = as.numeric(filter(dataset_2, letter == 'm')[1:13]) * as.numeric(filter(dataset_2, letter == 'o')[1:13]) * as.numeric(filter(dataset_2, letter == 's')[1:13]) * as.numeric(filter(dataset_2, letter == 't')[1:13]),
+           product = prior*likelihood,
+           posterior = product/sum(product)) ->results
+print(max(results$posterior))
+```
+### 3.3
+```{r}
+dataset_3 = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/AnastasiaOrlenko/hw3_Bayesian_inference/hw3_task_3.csv')
+success_rate = (dataset_3$a[1] + 33)/(dataset_3$a[1] + 33 + dataset_3$b[1] + 77)
+success_rate
+```
