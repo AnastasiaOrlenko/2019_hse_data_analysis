@@ -1,0 +1,24 @@
+---
+title: "HW-4"
+author: "Anastasia Orlenko"
+date: "13 февраля 2019"
+output: html_document
+---
+
+### 4.1
+```{r}
+caretta = read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/AnastasiaOrlenko/hw4_Advanced_Bayesian/hw4_caretta.csv')
+brs02 = caretta[caretta$speaker == 'brs02',]$vowel.dur
+
+mean_1 = mean (caretta$vowel.dur, trim = 0.1)
+mean_brs02 = mean (brs02)
+
+sd_1 = sd (caretta$vowel.dur) 
+sd_brs02 = sd (brs02)
+
+mean_mid = weighted.mean(c(mean_1, mean_brs02), c(1/sd_1, 1/sd_brs02))
+sd_mid = (1/sd_1 + 1/sd_brs02)^(-1)
+
+data.frame (speaker = 'brs02', mean_mid = mean_mid, sd_mid = sd_mid)
+```
+
